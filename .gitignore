@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/submissions/SrivalliMalladi/UseCase/.vs/FlightStatus.slnx
+/submissions/SrivalliMalladi/UseCase/FlightStatus.Api/bin/Debug/net10.0
+/submissions/SrivalliMalladi/UseCase/.vs
+/submissions/SrivalliMalladi/UseCase/FlightStatus.Api/obj
+/submissions/SrivalliMalladi/UseCase/FlightStatus.Tests/bin/Debug/net10.0
+/submissions/SrivalliMalladi/UseCase/FlightStatus.Tests/obj

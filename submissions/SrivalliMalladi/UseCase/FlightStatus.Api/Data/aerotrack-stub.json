@@ -1,0 +1,62 @@
+[
+  {
+    "flightNumber": "AB123",
+    "date": "2026-06-01",
+    "status": "Late departure",
+    "scheduledDepartureUtc": "2026-06-01T10:00:00Z",
+    "scheduledArrivalUtc": "2026-06-01T13:00:00Z",
+    "actualDepartureUtc": "2026-06-01T10:45:00Z",
+    "actualArrivalUtc": null,
+    "terminal": "T1",
+    "gate": "A12",
+    "delayReason": "Late arrival of inbound aircraft",
+    "lastUpdatedUtc": "2026-06-01T11:00:00Z",
+    "sourceProvider": "AeroTrack",
+    "message": "Gate changed; departure delayed ~45m"
+  },
+  {
+    "flightNumber": "AC456",
+    "date": "2026-06-02",
+    "status": "On schedule",
+    "scheduledDepartureUtc": "2026-06-02T08:00:00Z",
+    "scheduledArrivalUtc": "2026-06-02T11:00:00Z",
+    "actualDepartureUtc": null,
+    "actualArrivalUtc": null,
+    "terminal": "T2",
+    "gate": "B5",
+    "delayReason": null,
+    "lastUpdatedUtc": "2026-06-02T06:05:00Z",
+    "sourceProvider": "AeroTrack",
+    "message": "On time"
+  },
+  {
+    "flightNumber": "AT100",
+    "date": "2026-06-04",
+    "status": "Rerouted",
+    "scheduledDepartureUtc": "2026-06-04T09:00:00Z",
+    "scheduledArrivalUtc": "2026-06-04T12:00:00Z",
+    "actualDepartureUtc": "2026-06-04T09:05:00Z",
+    "actualArrivalUtc": null,
+    "terminal": "T3",
+    "gate": "C7",
+    "delayReason": "Airport closed",
+    "lastUpdatedUtc": "2026-06-04T10:00:00Z",
+    "sourceProvider": "AeroTrack",
+    "message": "Flight rerouted to alternate airport"
+  },
+  {
+    "flightNumber": "QF499",
+    "date": "2026-06-03",
+    "status": "cancel",
+    "scheduledDepartureUtc": "2026-06-03T15:00:00Z",
+    "scheduledArrivalUtc": "2026-06-03T18:00:00Z",
+    "actualDepartureUtc": null,
+    "actualArrivalUtc": null,
+    "terminal": null,
+    "gate": null,
+    "delayReason": "Operational issues",
+    "lastUpdatedUtc": "2026-06-03T12:00:00Z",
+    "sourceProvider": "QuickFlight",
+    "message": "Flight cancelled due to heavy rains"
+  }
+]

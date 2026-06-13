@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="FlightStatus.Api/FlightStatus.Api.csproj" />
+  <Project Path="FlightStatus.Tests/FlightStatus.Tests.csproj" Id="7da501fd-261a-4bd7-80bf-406a58b5f675" />
+</Solution>
