@@ -25,7 +25,7 @@ namespace FlightStatus.Tests.Endpoints
         {
             var client = _factory.CreateClient();
 
-            var res = await client.GetAsync("/flights/status?date=2026-06-13");
+            var res = await client.GetAsync("/api/v1/flights/status?date=2026-06-13");
 
             Assert.Equal(HttpStatusCode.BadRequest, res.StatusCode);
             var body = await res.Content.ReadAsStringAsync();
@@ -37,7 +37,7 @@ namespace FlightStatus.Tests.Endpoints
         {
             var client = _factory.CreateClient();
 
-            var res = await client.GetAsync("/flights/status?flightNumber=AB123");
+            var res = await client.GetAsync("/api/v1/flights/status?flightNumber=AB123");
 
             Assert.Equal(HttpStatusCode.BadRequest, res.StatusCode);
             var body = await res.Content.ReadAsStringAsync();
@@ -49,7 +49,7 @@ namespace FlightStatus.Tests.Endpoints
         {
             var client = _factory.CreateClient();
 
-            var res = await client.GetAsync("/flights/status?flightNumber=AB123&date=0601-2026");
+            var res = await client.GetAsync("/api/v1/flights/status?flightNumber=AB123&date=0601-2026");
 
             Assert.Equal(HttpStatusCode.BadRequest, res.StatusCode);
             var body = await res.Content.ReadAsStringAsync();
@@ -81,7 +81,7 @@ namespace FlightStatus.Tests.Endpoints
             var client = factory.CreateClient();
 
             // Act
-            var res = await client.GetAsync("/flights/status?flightNumber=AB123&date=2026-06-13");
+            var res = await client.GetAsync("/api/v1/flights/status?flightNumber=AB123&date=2026-06-13");
 
             var options = new JsonSerializerOptions
             {

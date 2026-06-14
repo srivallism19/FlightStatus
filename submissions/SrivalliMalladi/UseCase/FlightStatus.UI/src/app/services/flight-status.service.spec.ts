@@ -58,7 +58,7 @@ describe('FlightStatusService', () => {
 
     const req = httpMock.expectOne((request) =>
       request.method === 'GET' &&
-      request.url === 'https://localhost:44380/flights/status' &&
+      request.url.endsWith('/flights/status') &&
       request.params.get('flightNumber') === 'INVALID' &&
       request.params.get('date') === '2026-06-14'
     );

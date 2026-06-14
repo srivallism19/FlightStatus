@@ -1648,4 +1648,364 @@ Direct code deployment from Visual Studio (Windows App Service, no Docker)
 
 -------------------------------------------------------------------------------------------------------------------------------------------
 
+## Deploy to Azure App Service - Frontend
 
+### Prompt - 18
+
+I am getting this error, while deploying to azure app service of OS one with node 22 lts support. So, by seeing existing dist folder created under this path and tell me where is the issue:
+
+C:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI
+
+11:00:27 PM flightstatus-app: Zip package size: 184 kB
+11:00:27 PM flightstatus-app: Fetching changes.
+11:00:28 PM flightstatus-app: Starting LocalZipHandler
+11:00:28 PM flightstatus-app: Cleaning up temp folders from previous zip deployments and extracting pushed zip file /tmp/zipdeploy/96a2e121-4f9a-42eb-9f4b-6eadc99312d9.zip (0.18 MB) to /tmp/zipdeploy/extracted
+11:00:31 PM flightstatus-app: Updating submodules.
+11:00:32 PM flightstatus-app: Preparing deployment for commit id '68771264-d'.
+11:00:32 PM flightstatus-app: PreDeployment: context.CleanOutputPath False
+11:00:32 PM flightstatus-app: PreDeployment: context.OutputPath /home/site/wwwroot
+11:00:33 PM flightstatus-app: Repository path is /tmp/zipdeploy/extracted
+11:00:33 PM flightstatus-app: Running oryx build...
+11:00:33 PM flightstatus-app: Command: oryx build /tmp/zipdeploy/extracted -o /home/site/wwwroot --platform nodejs --platform-version 22 -p virtualenv_name= --log-file /tmp/build-debug.log -i /tmp/8deca3aa316a177 -p compress_node_modules=tar-gz | tee /tmp/oryx-build.log
+11:00:34 PM flightstatus-app: Operation performed by Microsoft Oryx, https://github.com/Microsoft/Oryx
+11:00:34 PM flightstatus-app: You can report issues at https://github.com/Microsoft/Oryx/issues
+11:00:34 PM flightstatus-app: Oryx Version: 0.2.20260513.1+5c94136d0d5c06204a00d688dc7aea902452e52c, Commit: 5c94136d0d5c06204a00d688dc7aea902452e52c, ReleaseTagName: 20260513.1
+11:00:34 PM flightstatus-app: Build Operation ID: 71de6aac5011a4d9
+11:00:34 PM flightstatus-app: Repository Commit : 68771264-dfb4-41c4-8ea6-02e2c64afec6
+11:00:34 PM flightstatus-app: OS Type : bookworm
+11:00:34 PM flightstatus-app: Image Type : githubactions
+11:00:34 PM flightstatus-app: Primary SDK Storage URL: https://oryx-cdn.microsoft.io
+11:00:34 PM flightstatus-app: Backup SDK Storage URL:
+11:00:34 PM flightstatus-app: ACR SDK Registry URL: (not set)
+11:00:34 PM flightstatus-app: SDK provider status:
+11:00:34 PM flightstatus-app: External ACR SDK provider: Disabled
+11:00:34 PM flightstatus-app: External SDK provider: Enabled
+11:00:34 PM flightstatus-app: Direct ACR SDK provider: Disabled
+11:00:34 PM flightstatus-app: Blob SDK provider: Enabled
+11:00:34 PM flightstatus-app: Detecting platforms...
+11:00:34 PM flightstatus-app: Could not detect any platform in the source directory.
+11:00:34 PM flightstatus-app: Error: Couldn't detect a version for the platform 'nodejs' in the repo.
+11:00:35 PM flightstatus-app: /bin/bash -c "oryx build /tmp/zipdeploy/extracted -o /home/site/wwwroot --platform nodejs --platform-version 22 -p virtualenv_name= --log-file /tmp/build-debug.log -i /tmp/8deca3aa316a177 -p compress_node_modules=tar-gz | tee /tmp/oryx-build.log ; exit $PIPESTATUS "
+11:00:35 PM flightstatus-app: Generating summary of Oryx build
+11:00:35 PM flightstatus-app: Parsing the build logs
+11:00:36 PM flightstatus-app: Found 0 issue(s)
+11:00:36 PM flightstatus-app: Build Summary :
+11:00:36 PM flightstatus-app: ===============
+11:00:36 PM flightstatus-app: Errors (0)
+11:00:36 PM flightstatus-app: Warnings (0)
+11:00:37 PM flightstatus-app: Deployment Failed. deployer = ms-azuretools-vscode deploymentPath = ZipDeploy. Extract zip.
+11:00:42 PM flightstatus-app: Deployment failed.
+
+### Github Copilot Output
+
+## Fix for App Service Linux deployment
+
+Your error is happening because Azure is deploying a folder that does not contain a Node app manifest. App Service Linux with Node expects a package.json in the deployment root, but your actual static Angular output is in:
+
+- browser
+
+That is why Oryx says:
+- `Could not detect any platform in the source directory`
+- `Couldn't detect a version for the platform 'nodejs' in the repo`
+
+---
+
+## Correct fix
+
+### 1. Add a Node server to serve the built Angular app
+
+Create `server.js` in the project root:
+
+```js
+const express = require('express');
+const path = require('path');
+const app = express();
+const distFolder = path.join(__dirname, 'dist', 'FlightStatus.UI', 'browser');
+
+app.use(express.static(distFolder));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(distFolder, 'index.html'));
+});
+
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
+```
+
+### 2. Update package.json
+
+Add express and update scripts:
+
+```json
+"dependencies": {
+  "@angular/animations": "^21.2.17",
+  "@angular/cdk": "^21.2.14",
+  "@angular/common": "^21.2.0",
+  "@angular/compiler": "^21.2.0",
+  "@angular/core": "^21.2.0",
+  "@angular/forms": "^21.2.0",
+  "@angular/material": "^21.2.14",
+  "@angular/platform-browser": "^21.2.0",
+  "@angular/router": "^21.2.0",
+  "express": "^4.18.4",
+  "rxjs": "~7.8.0",
+  "tslib": "^2.3.0"
+},
+"scripts": {
+  "ng": "ng",
+  "start": "node server.js",
+  "build": "ng build --configuration production",
+  "watch": "ng build --watch --configuration development",
+  "test": "ng test"
+}
+```
+
+Then run:
+
+```bash
+npm install
+npm run build -- --configuration production
+```
+
+---
+
+## 3. Deploy the project root
+
+In VS Code:
+- Open Azure App Service extension
+- Right-click your Linux App Service
+- Select `Deploy to Web App...`
+- Choose the project root:
+  - `C:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI`
+
+> Do not deploy only FlightStatus.UI or browser if you want App Service to run Node.
+
+---
+
+## 4. Ensure startup command is correct
+
+For Linux App Service, verify in Azure App Service settings:
+- Startup command: `npm start`
+
+If not set automatically, add it in Configuration > General settings or Application settings.
+
+---
+
+## Why this fixes it
+
+- App Service now sees package.json
+- Node runtime is detected
+- `npm install` can run
+- `npm start` launches `server.js`
+- `server.js` serves the static files from browser
+
+---
+
+## Quick alternative
+
+If you only want static SPA hosting, use **Azure Static Web Apps** instead of App Service. But for App Service Linux + Node 22, the above Node server fix is the correct path.
+
+If you want, I can also give you the exact VS Code deployment sequence step-by-step.
+
+
+## Notes
+
+Accepted and did the changes but still got the same error.
+
+------------------------------------------------------------------------------------------------------------
+
+## Deploy to Azure App Service - Frontend
+
+### Prompt - 19
+
+
+getting this error, while building from local:
+C:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI\node_modules\path-to-regexp\dist\index.js:108
+throw new PathError(Missing parameter name at index ${index}, str);
+
+### Github Copilot Output
+
+Inspecting source for any malformed route patterns and express path issues before applying a fix.
+
+Searched for regex ``\/:[^\s"'/>]|path\s*:\s*['"`][^"'`]*:[^"'`]*['"`]|routerLink\s*=|navigate\(|app\.get\(|express\.Router|provideRouter\(`` (`**/src/**/*.{ts,html}`), 1 result
+
+Scanning for any malformed route pattern or colon-only route definition in source files.
+
+Searched for regex ``["'`]\/?:|app\.get\(['"`][^\n]*:[^\n]*['"`]|path\s*:\s*['"`][^\n]*:[^\n]*['"`]`` (`**/src/**/*.{ts,html}`), 8 results
+
+Running a clean package tree check and exact build command through CMD so I can confirm the dependency path and rule out local environment issues.
+
+Ran terminal command: cmd /c "cd /d C:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI && npm ls path-to-regexp && npm ls @angular/router"
+
+Compacted conversation
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/package.json)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/server.js)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/angular.json)
+
+Searched for regex `"express"|"path-to-regexp"|"@angular/router"` (`**/package-lock.json`), 4 results
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/package-lock.json#2210-2210), lines 2210 to 2275
+
+Ran terminal command: cmd /c "cd /d C:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI && dir /b dist\FlightStatus.UI & dir /b dist\FlightStatus.UI\browser 2>nul || echo no-browser"
+
+Ran terminal command: cmd /c "cd /d C:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI && dir /b dist\FlightStatus.UI\browser | findstr /n ."
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/package-lock.json#1-1), lines 1 to 120
+
+Ran terminal command: cmd /c "cd /d C:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI && npm install"
+
+Searched for regex `"express": "\^4\.18\.4"|"express": "\^5\.2\.1"|"express": "4\.18\.4"|"express": "5\.2\.1"` (`**/package-lock.json`), 2 results
+
+Ran terminal command: cmd /c "cd /d C:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI && npm ls express && npm ls path-to-regexp && npm run build"
+
+## ✅ Fix confirmed
+
+I verified the project and the build now succeeds.
+
+### What I fixed
+- Ran `npm install` in `FlightStatus.UI` to reconcile dependencies
+- Confirmed `path-to-regexp` issue was not a malformed Angular route
+- Verified `npm run build` completes successfully
+
+### Current working setup
+- package.json
+  - `"start": "node server.js"`
+  - `"build": "ng build --configuration production"`
+- server.js
+  - Serves from browser
+  - SPA fallback with `app.get('*', ...)`
+
+### What to do next for Azure App Service
+1. Run locally:
+   - `npm install`
+   - `npm run build`
+2. Deploy the project root (`FlightStatus.UI`), not only dist
+3. Use App Service Linux with Node 22
+4. Set startup command to:
+   - `npm start`
+
+
+- Build output is present in browser
+- If you deploy source directly, make sure Azure can see package.json and server.js
+- The local build succeeded, so the remaining step is deployment configuration
+
+## Deploy now
+
+### 1. Build your app locally
+From `FlightStatus.UI` folder:
+
+```bash
+npm install
+npm run build
+```
+
+This creates the static files in:
+- browser
+
+### 2. Verify the Node server
+Your app should have:
+- server.js
+- package.json with:
+  - `"start": "node server.js"`
+
+server.js must serve browser and fallback to `index.html`.
+
+### 3. Deploy to Azure App Service
+Use VS Code Azure App Service extension:
+
+1. Sign in to Azure in VS Code
+2. Open the `FlightStatus.UI` folder
+3. In Azure App Service pane:
+   - Create new Web App
+   - Runtime: **Linux**
+   - Stack: **Node 22 LTS**
+4. Right-click the app and choose:
+   - `Deploy to Web App`
+   - Select the `FlightStatus.UI` folder
+
+### 4. Set startup command
+In App Service -> `Configuration` -> `General settings`:
+- Startup command: `npm start`
+
+This tells App Service to run your Node server, which serves the built Angular app.
+
+### 5. Confirm
+After deploy, open the app URL from Azure and verify it loads.
+
+> If you want, I can also give you the exact VS Code App Service extension steps with screenshots.
+
+## Notes
+
+Accepted and the flow got modified to run the applciation as now it is coming with new port.
+
+----------------------------------------------------------------------------------
+
+## Deploy to Azure App Service - Frontend
+
+### Prompt - 20
+
+update readme file as per the latest changes and also update the things on how to start the app from local and how to check from Azure and I will update the cloud links
+
+### Github Copilot Output
+
+Checking current README and app config so the updates match your current project setup.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/package.json)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/server.js)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/README.md)
+
+Updating README with current local start and Azure deployment instructions.
+
+Replacing 60 lines with 104 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/README.md)
+
+I found the README content and will replace it with the updated deployment and local start guidance.
+
+Replacing 14 lines with 48 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/README.md)
+
+
+```
+
+```
+
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/README.md)
+
+Adding Azure deployment instructions and cloud link placeholders to the README.
+
+Replacing 50 lines with 84 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/README.md)
+
+Found the README current content; now adding the Azure deployment section in the correct spot.
+
+Replacing 12 lines with 46 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/README.md)
+
+
+```
+
+```
+
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/README.md)
+
+✅ README updated with the latest local start and Azure deployment instructions.
+
+What changed:
+- Added local build/start steps for `npm install`, `npm run build`, and `npm start`
+- Added Azure App Service deployment guidance
+- Added startup command info: `npm start`
+- Added deployment folder requirements and verification steps
+- Added placeholders for your cloud links
+
+If you want, I can also trim the README down to only the essential deployment/start instructions.
+
+Made changes.
+
+## Notes
+
+Accepted the content and updated README file regarding deployment of backend and frontend.

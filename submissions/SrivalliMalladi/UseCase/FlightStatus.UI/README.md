@@ -1,16 +1,84 @@
-# FlightStatusUI
+# FlightStatus UI
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.6.
+This project is an Angular 21 application that is hosted with a small Express server for production deployment.
 
-## Development server
+## Prerequisites
 
-To start a local development server, run:
+- Node.js 22.x or later
+- npm 11.x or later
+- Azure App Service (Linux) with Node.js runtime
+
+## Local development and production run
+
+### Install dependencies
+
+From the project root (`FlightStatus.UI`):
 
 ```bash
-ng serve
+npm install
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Build for production
+
+```bash
+npm run build
+```
+
+This generates the production build files in:
+
+```text
+dist/FlightStatus.UI/browser
+```
+
+### Start the local server
+
+```bash
+npm start
+```
+
+Then open your browser at:
+
+```text
+http://localhost:8080
+```
+
+### What `npm start` does
+
+The `package.json` script runs `node server.js`, which serves the static build output from `dist/FlightStatus.UI/browser` and returns `index.html` for all routes.
+
+## Azure App Service deployment
+
+### Folder to deploy
+
+Deploy the entire `FlightStatus.UI` folder, not only the `dist` folder. The deployed folder must include:
+
+- `package.json`
+- `server.js`
+- `angular.json`
+- `src/`
+- `dist/FlightStatus.UI/browser`
+
+### Azure App Service settings
+
+- OS: **Linux**
+- Runtime stack: **Node 22 LTS**
+- Startup command: `npm start`
+
+### Verify deployment
+
+After deployment completes and the app restarts, open the app URL and verify that the Angular app loads.
+
+If the app does not load:
+
+1. Confirm `npm start` is set in App Service `Configuration > General settings`
+2. Confirm `server.js` exists in the deployed root
+3. Confirm `dist/FlightStatus.UI/browser` exists after build
+4. Check App Service logs for startup or server errors
+
+### Cloud links
+
+- Application URL: _update this with your Azure App Service URL_
+- Azure deployment portal: _update this with your Azure App Service link_
 
 ## Code scaffolding
 
