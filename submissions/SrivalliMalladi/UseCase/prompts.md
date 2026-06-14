@@ -1601,3 +1601,51 @@ Made changes.
 
 --------------------------------------------------------------------------------------------------------
 
+## Deploy to Azure App Service - Backend
+
+### Prompt - 17
+
+I am planning to deploy to Azure app service for backend created App service with windows OS and code deployment.
+So, how to publish the code from visual studio? I created App service with windows OS and Code deployment
+
+
+### Github Copilot Output
+
+Direct code deployment from Visual Studio (Windows App Service, no Docker)        
+1.	Sign in to Azure in Visual Studio
+•	Click the account/Azure icon (top-right) → Sign in with the Azure account that owns the App Service.
+•	(Optional) Open Cloud Explorer (View → Cloud Explorer) to confirm you see your subscription and the App Service.
+2.	Prepare the project
+•	In Solution Explorer, right‑click the API project → Choose "Set as Startup Project".
+•	Select Release configuration (toolbar) and target framework .NET 10.
+•	Build once: Build → Build Solution.
+3.	Publish to the existing App Service
+•	Right‑click the project → Publish...
+•	In the Publish dialog choose: Azure → Azure App Service (Windows) → Select Existing → Next.
+•	Pick the correct Subscription and then select the App Service you created. Click Finish.
+•	In the Publish profile confirm:
+•	Deployment method: Web Deploy (for Windows / code deployments).
+•	Configuration: Release.
+•	Click Publish. Visual Studio will build, run the Web Deploy step, and open the site URL when finished.
+•	Watch Output (select "Show output from: Publish") for deployment logs and errors.
+4.	Post‑deploy configuration (Portal)
+•	Open Azure Portal → App Services → select your app.
+•	Configuration → Application settings: add any environment variables (e.g., ASPNETCORE_ENVIRONMENT=Production) and connection strings. Save and Restart the app.
+•	Deployment Center → Deployment logs (if you want history of Web Deploy operations).
+5.	View runtime logs and diagnose
+•	Portal: App Service → Log stream — view startup exceptions and console output.
+•	If you prefer VS: Cloud Explorer → right‑click the app → View Streaming Logs.
+•	For unhandled errors, enable Application Logging (App Service → Diagnostics settings) and inspect logs.
+6.	Common troubleshooting
+•	Publish fails with auth: ensure you are signed into the correct Azure account and have Contributor on the App Service/resource group.
+•	App returns 500 after publish: check connection strings in App Service Configuration and the Log stream for stack traces.
+•	Missing DLL on startup: confirm the project published successfully and the entry assembly name matches the project output (adjust project properties if needed).
+
+
+
+## Notes
+- Accepted the content and created App service plan and App Service with Windows OS with name as flightstatus-backend and Code deployment and also published the code from visual studio to Azure App service. Now the clodu swagger is laoding
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+

@@ -10,7 +10,7 @@ import { FlightStatusResult } from '../models/FlightStatusResult';
   providedIn: 'root'
 })
 export class FlightStatusService {
-  private readonly apiUrl = environment.apiUrl + '/flights/status';
+  private readonly apiUrl = environment.apiUrl + '/v1/flights/status';
 
   constructor(private readonly http: HttpClient) {}
 

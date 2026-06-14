@@ -11,6 +11,6 @@ public static class HealthEndpoint
     /// <param name="app"></param>
     public static void MapHealthEndpoints(this WebApplication app)
     {
-        app.MapGet("/health", () => Results.Ok(new { status = "Healthy" }));
+        app.MapGet("api/v1/health", () => Results.Ok(new { status = "Healthy" }));
     }
 }

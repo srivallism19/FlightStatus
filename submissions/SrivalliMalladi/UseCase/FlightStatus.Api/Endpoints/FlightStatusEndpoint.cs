@@ -18,7 +18,7 @@ public static class FlightStatusEndpoint
     /// <param name="app">Web application builder to register endpoints on.</param>
     public static void MapFlightStatusEndpoints(this WebApplication app)
     {
-        app.MapGet("/flights/status", async (HttpContext http, string? flightNumber, string? date, IFlightStatusService service) =>
+        app.MapGet("api/v1/flights/status", async (HttpContext http, string? flightNumber, string? date, IFlightStatusService service) =>
         {
             var errors = new List<string>();
 
