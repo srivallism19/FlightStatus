@@ -56,6 +56,17 @@ public partial class Program
             }
         });
 
+        // Configure CORS to allow any origin, method, and header
+        builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(policy =>
+            {
+                policy.AllowAnyOrigin()
+                      .AllowAnyMethod()
+                      .AllowAnyHeader();
+            });
+        });
+
         var app = builder.Build();
 
         // Enable swagger
@@ -71,6 +82,9 @@ public partial class Program
 
         // Optional middleware
         app.UseHttpsRedirection();
+
+        // Enable CORS
+        app.UseCors();
 
         // Map endpoints (ensure they are discoverable by Swagger)
         app.MapHealthEndpoints();

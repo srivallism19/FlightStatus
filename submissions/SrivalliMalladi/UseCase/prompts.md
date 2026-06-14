@@ -680,5 +680,924 @@ If you want, I can also:
 - Shows test coverage with xUnit + Moq.
 
 ------------------------------------------------------------------------------------------------------------
+## Frontend setup - Angular
 
+### Prompt - 9
+
+ In the Angular project FlightStatus.UI at 
+C:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI
+
+Generate the following:
+
+1. Components:
+   - search-form.component.ts / .html / .css / .spec.ts
+     • Flight number input (text box).
+     • Date picker bound to yyyy-MM-dd format.
+     • Submit button that calls FlightStatus.Api at /flights/status?flightNumber={code}&date={yyyy-MM-dd}.
+   - result-card.component.ts / .html / .css / .spec.ts
+     • Display unified status with colour coding:
+       - Green = OnTime
+       - Amber = Delayed
+       - Red = Cancelled/Diverted
+       - Grey = Unknown
+     • Show AeroTrack-only fields (gate, terminal, delay reason) when present, hide when absent.
+     • Basic error message when API returns BadRequest or fails.
+
+2. Service:
+   - flight-status.service.ts with a matching flight-status.service.spec.ts
+     • Use Angular HttpClient.
+     • Method getStatus(flightNumber: string, date: string): Observable<FlightStatusResult>.
+     • Handle errors and propagate them to the UI.
+
+3. Project Setup:
+   - Remove placeholder code from app.component.html.
+   - Wire search-form to call the service.
+   - Pass the result to result-card for display.
+   - Show error state if API call fails.
+
+4. Styling and Look & Feel:
+   - Create separate CSS files for each component.
+   - Create separate folders for services and components and then create files and create separate files for test cases
+   - Use Angular Material for form controls and cards.
+   - Apply colour-coded badges for status values.
+   - Ensure a clean, professional look and feel with spacing, typography, and responsive layout.
+
+
+### Github Copilot Output
+
+Reviewing the existing app structure and dependencies first.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/package.json)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/angular.json)
+
+Reviewing current app entry files and styles to wire the new components cleanly.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/styles.css)
+
+Found the app structure; next I’m verifying current bootstrap and component model before creating files.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.html)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.config.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.routes.ts)
+
+Checking bootstrap and existing app styling before writing new component structure.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/main.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.css)
+
+I’ve confirmed the app is standalone-based; next I’m checking test conventions and component file layout.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.spec.ts)
+
+Creating the new component and service folders now.
+
+Created [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form)
+
+Created [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card)
+
+Created [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/services)
+
+Creating the new service and search-form component files.
+
+Created [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/services/flight-status.service.ts)
+
+Created [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/services/flight-status.service.spec.ts)
+
+Writing the component source, template, and tests now.
+
+Created [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.ts)
+
+Created [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.html)
+
+Created [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.css)
+
+Created [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.spec.ts)
+
+Created [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.ts)
+
+Created [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.html)
+
+Created [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.css)
+
+Created [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.spec.ts)
+
+Now wiring the app component, styles, and Angular Material setup.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.ts)
+
+Updating app bootstrap, wiring service and Material setup now.
+
+Replacing 54 lines with 177 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/package.json), [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.ts), [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.html), [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.css), [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/styles.css), [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.spec.ts)
+
+
+---
+
+----
+
+----
+
+
+
+Verifying the app file contents after the partial update so I can finish the wiring cleanly.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.html)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.css)
+
+Confirming the current file updates before finalizing the app markup and styles.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/package.json)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/styles.css)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.spec.ts)
+
+I’ve got the files and dependencies in place. Now I’m replacing app.html and `app.css` so the app uses the new search form, result card, and styling.
+
+Replacing 4 lines with 75 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.html), [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.css)
+
+Checking exact app template and style file contents before rewriting them.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.html)
+
+Applying final app markup and layout styles.
+
+Replacing 2 lines with 19 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.html)
+
+One last exact replacement update for app.html; then I’ll finish the style file.
+
+Replacing 1 lines with 18 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.html)
+
+----------
+
+Replacing 1 lines with 56 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.css)
+
+
+-------------
+
+Verifying created files and Angular structure before concluding.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/services)
+
+Searched for regex `search-form.component|result-card.component|FlightStatusService|getStatus|app-search-form` (`**/src/**`), 25 results
+
+✅ Done. The `FlightStatus.UI` app now includes:
+
+- `src/app/components/search-form/*`
+  - search-form.component.ts
+  - `search-form.component.html`
+  - `search-form.component.css`
+  - search-form.component.spec.ts
+
+- `src/app/components/result-card/*`
+  - result-card.component.ts
+  - `result-card.component.html`
+  - `result-card.component.css`
+  - result-card.component.spec.ts
+
+- flight-status.service.ts
+- flight-status.service.spec.ts
+
+- Updated app.ts, app.html, app.css
+- Updated styles.css
+- Added Angular Material dependencies to package.json
+
+The app now wires `app-search-form` through `FlightStatusService` and renders results with `app-result-card`, including error handling and status colour badges.
+
+Made changes.
+
+### Notes
+- Accepted most of the generated content and getting packages issues for Angular material
+
+--------------------------------------------------------------------------------------------
+## Frontend setup - Angular
+
+### Prompt - 10
+
+In FlightStatus.UI, update styles.css to use the correct Angular Material prebuilt theme as I am getting build errors while running npm start command. 
+- Remove the invalid import "@angular/material/core/themes/generated/indigo-pink.css"
+- Ensure the project builds without errors.
+- Optionally suggest other available prebuilt themes 
+
+### Github Copilot Output
+
+Checking the current global stylesheet and confirming the invalid import before fixing it.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/styles.css)
+
+Updating the global stylesheet to use the supported Material prebuilt theme path.
+
+Replacing 5 lines with 5 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/styles.css)
+
+
+```
+
+```
+✅ Fixed. styles.css now imports the correct Angular Material prebuilt theme:
+
+- `@import "@angular/material/prebuilt-themes/indigo-pink.css";`
+
+This should resolve the build error.
+
+Optional prebuilt themes you can use instead:
+- `@angular/material/prebuilt-themes/deeppurple-amber.css`
+- `@angular/material/prebuilt-themes/pink-bluegrey.css`
+- `@angular/material/prebuilt-themes/purple-green.css`
+
+Made changes.
+
+### Notes
+- Accepted most of the generated content
+- now I am able to build the application without any errors
+- moved endpoints to enviroment.ts file by creating separate environments folder and integrated that url inside service file
+-----------------------------------------------------------------------------------------------------------
+## Frontend setup - Angular
+
+### Prompt - 11
+
+In FlightStatus.UI, based on this API response:
+
+{
+  "flightNumber": "AT100",
+  "date": "2026-06-04",
+  "status": "Diverted",
+  "scheduledDepartureUtc": "2026-06-04T09:00:00+00:00",
+  "actualDepartureUtc": "2026-06-04T09:05:00+00:00",
+  "scheduledArrivalUtc": "2026-06-04T12:00:00+00:00",
+  "actualArrivalUtc": null,
+  "terminal": "T3",
+  "gate": "C7",
+  "delayReason": "Airport closed",
+  "lastUpdatedUtc": "2026-06-04T10:00:00+00:00",
+  "sourceProvider": "AeroTrack",
+  "message": "Flight rerouted to alternate airport"
+}
+
+Requirements:
+1. Define a FlightStatusResult interface with all fields typed correctly (string, Date, nullable) based on above API response.
+2. Integrate this model into flight-status.service.ts so getStatus returns Observable<FlightStatusResult>.
+3. Update result-card.component.ts to:
+   - Display unified status with colour coding:
+     • Green = OnTime
+     • Amber = Delayed
+     • Red = Cancelled/Diverted
+     • Grey = Unknown
+   - Show AeroTrack-only fields (gate, terminal, delayReason) when present, hide when absent.
+   - Show basic error message when API returns an error.
+4. Ensure search-form.component.ts passes flightNumber and date to the service and binds the result to result-card.
+5. Create separate .ts, .html, .css, and .spec.ts files for each component.
+6. Use Angular Material for form controls and cards, with badges for status values.
+7. Display response success/ fail based on endpoint response only. In existing flow, it is displaying in pageload itself with error message regarding search result.
+
+### Github Copilot Output
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/services/flight-status.service.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/environments)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/environments/environment.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.html)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/services/flight-status.service.spec.ts)
+
+I'll update the service, the result-card component, and the service tests to use the typed model and parse date strings into Date objects. This will wire API response mapping and adjust templates/tests to the new shape.
+
+Apply Patch
+
+Apply Patch
+
+Applying the patch using the full absolute file path to ensure the correct file is updated.
+
+Generating patch (129 lines) in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/services/flight-status.service.ts)
+
+
+```
+
+```
+
+
+Generating patch (37 lines) in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.ts)
+
+
+```
+
+```
+Next I'll update the result card template to use the new `status` field and date/time properties, and to hide AeroTrack details when absent.
+
+Generating patch (30 lines) in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.html)
+
+
+```
+
+```
+
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.spec.ts)
+
+Generating patch (27 lines) in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.spec.ts)
+
+
+```
+
+```
+Now I'll update the service unit test to flush a raw API JSON response (with date strings) and assert the returned object has Date-typed fields.
+
+Generating patch (46 lines) in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/services/flight-status.service.spec.ts)
+
+
+```
+
+```
+
+
+Searched for text `unifiedStatus`, 16 results
+
+Searched for regex `status: 'OnTime'|status: 'Delayed'|status.status` (`**/src/**`), 5 results
+
+Updating the task list to reflect the changes I just made.
+
+Created 4 todos
+
+Progress update: I updated the model, service, result card, and tests to use the API-shaped, Date-typed response and to only show errors from the endpoint.
+
+What I changed
+- Updated flight-status.service.ts
+  - Added a strict `FlightStatusResult` interface with Date and nullable types.
+  - `getStatus()` now fetches raw JSON and maps date strings to `Date` objects, returns `Observable<FlightStatusResult>`, and preserves existing error handling.
+- Updated `src/app/components/result-card/*`
+  - result-card.component.ts now uses `status.status` and maps to colour classes (green/amber/red/grey).
+  - result-card.component.html displays dates with the Angular date pipe, shows AeroTrack-only fields (`gate`, `terminal`, `delayReason`) only when present, and uses the endpoint-driven `error` input for errors.
+  - result-card.component.spec.ts updated to use `Date` fields and `status` value in tests.
+- Updated flight-status.service.spec.ts
+  - Test now flushes a raw JSON response (date strings) and asserts that returned values are mapped to `Date` objects and the `status` field is preserved.
+
+Files changed (high level)
+- Modified: flight-status.service.ts
+- Modified: flight-status.service.spec.ts
+- Modified: result-card.component.ts
+- Modified: result-card.component.html
+- Modified: result-card.component.spec.ts
+
+Next steps you may want
+- Run the app and tests:
+  - Install dependencies (if you changed package.json): 
+    ```
+    npm install
+    npm start
+    npm test
+    ```
+- If you want, I can:
+  - Run the tests in this workspace now.
+  - Update `search-form` to emit an explicit formatted `yyyy-MM-dd` string (it currently emits the `<input type="date">` value which is already `yyyy-MM-dd`).
+  - Add a small message or spinner UI while `loading` is true.
+
+Would you like me to run the unit tests or start the dev server?
+
+Made changes.
+
+### Notes
+- Accepted most of the generated content and removed default enum values for status field and declared string type.
+- removed this interface from service file and created separate file under models folder and handled references.
+
+------------------------------------------------------------------------------------------------------
+
+## Frontend setup - Angular
+
+### Prompt - 12
+
+add some styling to app.html content..it is like plain text andchange content based on this scenario:
+The SkyRoute platform needs a Flight Status lookup feature.
+A support agent enters a flight number and a date. The system queries two flight data providers, normalises their responses into a single
+status model, and displays the result
+
+### Github Copilot Output
+
+Reviewing current app template and layout styles so I can style the UI and update the messaging.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.html)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.css)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/styles.css)
+
+Reviewing app component structure before styling so I preserve functionality and update the scenario text.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.ts)
+
+Updating the app page content and styles so the SkyRoute scenario is clearly communicated with polished layout.
+
+Replacing 65 lines with 134 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.html), [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.css)
+
+
+```
+
+```
+I’ve updated the styling layout; verifying app.html content now and completing the missing template update.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.html)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.css)
+
+I found the style update successfully applied, but app.html still has the old copy. I’m replacing it now with the new SkyRoute scenario content.
+
+Replacing 14 lines with 30 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.html)
+
+Replacing the app template content with the updated SkyRoute scenario and layout.
+
+Replacing 13 lines with 29 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.html)
+
+
+```
+
+```
+Confirming the updated page content and layout before closing out.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.html)
+
+✅ Updated app.html with SkyRoute-specific copy and a styled workflow panel.
+
+What changed:
+- New hero text describing the SkyRoute support-agent workflow
+- Added a `hero-panel` summary box with the lookup steps
+- Retained the search form layout and improved the placeholder result card
+
+If you want, I can also add a real `app-result-card` display placeholder instead of the static "Ready to search" card.
+
+Made changes.
+
+## Notes
+- Accepted the content and modified some content inside app.html file and the alignments.
+
+-------------------------------------------------------------------------------------------------------------
+
+## Frontend setup - Angular
+
+### Prompt - 13
+
+- In FlightStatus.UI search-form.component.html, replace the native <input type="date"> with Angular Material datepicker
+- ensure all the needed packages are installed and imported in search-form-component ts file and build the application at end and fix if any build issue are there
+
+### Github Copilot Output
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.html)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/package.json)
+
+Updating search-form component to use Angular Material datepicker. I'll add the necessary imports and replace the native date input. 
+
+Replacing 39 lines with 44 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.ts), [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.html)
+
+
+```
+
+```
+Now I'll build the application to check for any issues. 
+
+Ran terminal command: cd "c:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI" ; npm run build 2>&1
+
+Ran terminal command: cd "c:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI" ; & 'C:\Program Files\nodejs\npm.cmd' run build 2>&1
+
+Build succeeded! I see a warning about `ResultCardComponent` not being used in app.ts. Let me fix that by removing it from the app component imports since it's now only used in the search-form component. 
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.ts)
+
+Replacing 16 lines with 15 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.ts)
+
+
+```
+
+```
+Now I need to ensure the date is formatted correctly when submitting the form. The mat-datepicker provides a Date object, but the API expects 'yyyy-MM-dd' format. Let me update the search-form component to format the date properly. 
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.ts#40-40), lines 40 to 79
+
+Replacing 14 lines with 36 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.ts)
+
+
+```
+
+```
+Building the app again to ensure the date formatting change compiles correctly. 
+
+Ran terminal command: cd "c:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI" ; & 'C:\Program Files\nodejs\npm.cmd' run build 2>&1
+
+Perfect! ✅ The build succeeded with no critical errors. The only warning is about bundle size, which is not a blocker. Let me start the dev server to verify the Material datepicker works correctly in the browser.  
+
+Task `npm: start` failed with exit code 1.
+
+Ran terminal command: Set-Location "c:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI" ; & 'C:\Program Files\nodejs\npm.cmd' start
+
+Sent `y` to terminal
+
+Perfect! The dev server is running on `http://localhost:63359/`. Let me open the application to verify the Material datepicker is working correctly.  
+
+Opened [Browser](vscode-browser:/de3a3c82-c19b-4a7a-a5cf-9cdae9dee5d1?vscodeLinkType=browser)
+
+Great! The app loaded successfully. I can see the Material date input with the calendar icon. Let me click on the calendar icon to verify the Material datepicker opens correctly.   
+
+Clicked Open calendar button in [Browser](vscode-browser:/de3a3c82-c19b-4a7a-a5cf-9cdae9dee5d1?vscodeLinkType=browser)
+
+Clicked calendar button in [Browser](vscode-browser:/de3a3c82-c19b-4a7a-a5cf-9cdae9dee5d1?vscodeLinkType=browser)
+
+Captured screenshot of Material datepicker calendar
+Completed with input: {
+  "pageId": "de3a3c82-c19b-4a7a-a5cf-9cdae9dee5d1",
+  "element": "Material datepicker calendar"
+}
+
+✅ Perfect! The Material datepicker is working correctly! The calendar popup opened showing June 2026 with proper styling and navigation.
+
+## Summary of Changes
+
+I've successfully replaced the native `<input type="date">` with Angular Material datepicker and built the application. Here's what was done:
+
+### 1. **Updated search-form.component.ts**
+   - Added imports for Material datepicker modules:
+     - `MatDatepickerModule`
+     - `MatNativeDateModule` (for date parsing)
+     - `MatIconModule` (for calendar icon)
+   - Added these modules to the component's imports array
+
+### 2. **Updated search-form.component.html**
+   - Replaced native date input with Material datepicker:
+     ```html
+     <input matInput [matDatepicker]="picker" formControlName="date" placeholder="Select date" readonly />
+     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+     <mat-datepicker #picker></mat-datepicker>
+     ```
+   - The datepicker has a calendar icon toggle button
+
+### 3. **Added Date Formatting**
+   - Created `formatDate()` method in search-form.component.ts to convert Date objects to 'yyyy-MM-dd' string format
+   - Ensures API receives the date in the correct format
+
+### 4. **Fixed Build Warning**
+   - Removed unused `ResultCardComponent` import from app.ts
+   - Clean build with no critical errors
+
+### 5. **Verified Build & Dev Server**
+   - Production build: ✅ Successful
+   - Dev server: ✅ Running on http://localhost:63359/
+   - Material datepicker: ✅ Working correctly with calendar UI
+
+The application is now running with a fully functional Angular Material datepicker that provides a better user experience than the native browser date picker!
+
+Made changes.
+
+## Notes
+- Accepted the content and modified the alignements of date picker and search box.
+---------------------------------------------------------------------------------------------------------
+
+## Angular - Test cases
+
+### Prompt - 14
+
+In FlightStatus.UI, generate Angular unit test cases for search-form.component and result-card.component.
+
+Use Jasmine/Karma test style with TestBed configuration.
+Import all needed modules, and the components under test.
+Write tests for:
+• Form validation (flight number required, date required).
+• Submitting valid form triggers FlightStatusService.getStatus().
+• Result-card displays status with correct color coding (OnTime = green, Delayed = amber, Cancelled/Diverted = red, Unknown = grey).
+• AeroTrack-only fields (gate, terminal, delayReason) render when present, hidden when absent.
+• Error state displays when API returns an error.
+Ensure spec files compile without errors by including all required imports and providers and any where needed do mock the responses.
+
+### Github Copilot Output
+
+Checking current component and test files first so the new specs match the actual implementation.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.html)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.html)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components)
+
+Reviewing existing spec file presence and exact component files before adding new tests.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card)
+
+Reading the existing spec files so I can replace them with complete Jasmine/Karma tests matching current component code.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.spec.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.spec.ts)
+
+Updating both spec files with full Jasmine/Karma coverage for form validation, service interaction, status badges, AeroTrack details, and error behavior.
+
+Replacing 77 lines with 288 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.spec.ts), [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.spec.ts)
+
+
+```
+
+```
+✅ Test files updated successfully.
+
+I added Jasmine/Karma specs for:
+
+- search-form.component.spec.ts
+  - flight number required
+  - date required
+  - submitting valid form calls `FlightStatusService.getStatus()`
+  - error state sets `error` when service fails
+
+- result-card.component.spec.ts
+  - status badge color mapping:
+    - `OnTime` → green
+    - `Delayed` → amber
+    - `Cancelled`/`Diverted` → red
+    - `Unknown` → grey
+  - AeroTrack-only fields render only when present
+  - error card displays when `error` is set
+
+All required Angular Material modules and providers were included for the component test setup.
+
+Made changes.
+
+## Notes
+- Accepted the generated test cases and got some build errors 
+---------------------------------------------------------------------------------------------
+## Angular - Test cases
+
+### Prompt - 15
+
+getting some build errors in flight-status.service.spec.ts and search-form.component.spec.ts files. pls fix those and make sure all paths are covered
+
+### Github Copilot Output
+
+Inspecting the current spec files and service test to identify compile errors and path issues.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.spec.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/services/flight-status.service.spec.ts)
+
+Checking current file paths and model exports so the test imports are correct.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/models)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/models/FlightStatusResult.ts)
+
+Running the current test suite to capture the exact spec compile errors and fix them precisely.
+
+Ran terminal command: Set-Location "c:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI" ; & 'C:\Program Files\nodejs\npm.cmd' test -- --watch=false
+
+Identifying the exact failures so I can correct the spec files with proper Jasmine/Karma types and control types.
+
+Created 2 todos
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/tsconfig.spec.json)
+
+Fixing the spec compile errors by updating TypeScript test config and correcting Jasmine matcher usage and form-control typing.
+
+Replacing 34 lines with 35 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/tsconfig.spec.json), [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.ts), [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.spec.ts), [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/services/flight-status.service.spec.ts)
+
+
+```
+
+```
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/tsconfig.json)
+
+I found the root issue: the spec compiler is using mixed test globals and wrong assertion types. I’m fixing tsconfig and the spec assertions so Jasmine-style tests compile cleanly.
+
+Replacing 24 lines with 23 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/tsconfig.spec.json), [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.spec.ts)
+
+
+```
+
+```
+Verifying the updated config and spec file content to ensure the Jasmine types path is correct and all assertions are valid.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/tsconfig.spec.json)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.spec.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.ts)
+
+Applying type fixes for search-form form control and adding Jasmine type definitions so spec compilation succeeds.
+
+Replacing 18 lines with 20 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.ts), [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/package.json)
+
+
+```
+
+```
+
+Ran terminal command: Set-Location "c:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI" ; & 'C:\Program Files\nodejs\npm.cmd' install
+
+Ran terminal command: Set-Location "c:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI" ; & 'C:\Program Files\nodejs\npm.cmd' test -- --watch=false
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/AppData/Roaming/Code/User/workspaceStorage/0e16470e4ab7dd2e4e445daa9d2ae6eb/GitHub.copilot-chat/chat-session-resources/adedcd8e-ee63-4746-bb07-21a9cd79429f/call_awJbTWuZuMzqS47xWyfDQBAK__vscode-1781408833473/content.txt#1-1), lines 1 to 220
+
+Replacing 70 lines with 76 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.spec.ts), [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/services/flight-status.service.spec.ts)
+
+Compacted conversation
+```
+
+```
+
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.spec.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.spec.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.ts)
+
+Replacing 1 lines with 1 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.html)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.html)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.spec.ts)
+
+Replacing 1 lines with 1 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.html)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/services/flight-status.service.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/services/flight-status.service.spec.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.html)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/environments/environment.ts)
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/models/FlightStatusResult.ts)
+
+Replacing 38 lines with 39 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.spec.ts), [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/services/flight-status.service.ts), [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.spec.ts), [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.spec.ts)
+
+
+```
+
+```
+
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/package.json)
+
+Ran terminal command: cd "c:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI" ; npm test -- --watch=false
+
+Ran terminal command: cd "c:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI" ; cmd /c "npm.cmd test -- --watch=false"
+
+Searched for regex `jasmine.createSpyObj|jasmine\b` (`**/src/**/*.{ts,js}`), 2 results
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/tsconfig.spec.json)
+
+Replacing 11 lines with 12 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.spec.ts)
+
+
+```
+
+```
+
+Replacing 7 lines with 7 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.spec.ts)
+
+
+```
+
+```
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/result-card/result-card.component.spec.ts)
+
+Searched for text `jasmine` (`**/src/**/*.{ts,js}`), no results
+
+Searched for text `jasmine` (`**/src/app/components/search-form/search-form.component.spec.ts`), no results
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.spec.ts#1-1), lines 1 to 80
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.spec.ts#80-80), lines 80 to 101
+
+Searched for regex `jasmine.createSpyObj|jasmine\.SpyObj|jasmine\.` (`**/*.{ts,js}`), 87 results
+
+Replacing 28 lines with 28 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.spec.ts), [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/app.spec.ts)
+
+
+```
+
+```
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.spec.ts)
+
+Ran terminal command: cd "c:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI" ; cmd /c "npm.cmd test -- --watch=false"
+
+Replacing 8 lines with 8 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/FlightStatus.UI/src/app/components/search-form/search-form.component.spec.ts)
+
+
+```
+
+```
+
+Ran terminal command: cd "c:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\FlightStatus.UI" ; cmd /c "npm.cmd test -- --watch=false"
+
+## ✅ Unit tests fixed
+
+The failing specs are now passing.
+
+### What changed
+
+- search-form.component.spec.ts
+  - Removed `fakeAsync`/`tick` dependency and switched to synchronous fixture updates.
+  - Replaced Jasmine spy creation with a plain Vitest-compatible `vi.fn()` stub.
+  - Kept form submission test aligned with the component behavior.
+
+- flight-status.service.ts
+  - Parsed API UTC date strings into `Date` objects for `scheduledDepartureUtc`, `actualDepartureUtc`, `scheduledArrivalUtc`, `actualArrivalUtc`, and `lastUpdatedUtc`.
+
+- app.spec.ts
+  - Corrected the expected header text to match the actual template content.
+
+- result-card.component.spec.ts
+  - Removed initial `detectChanges()` before input binding to avoid `ExpressionChangedAfterItHasBeenCheckedError`.
+
+### Validation
+
+- Ran `npm.cmd test -- --watch=false`
+- Result: `4 passed`, `16 passed`
+
+If you want, I can also help you add a small smoke test for the `SearchFormComponent` button state or improve the `FlightStatusService` mock coverage further.
+
+Made changes.
+
+## Notes
+- Accepted the generated test cases and all build errors are resolved and test cases are passed
+
+----------------------------------------------------------------------------------------
+
+## README file update for Angular
+
+### Prompt - 16
+
+- for all this setp, update readme file in this path : C:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase
+- wherever the modifictaions are needed do the modifictaions and give steps and commands to make the ui application works locally after cloning
+
+### Github Copilot Output
+
+Reading the current README.md so I can update it with the correct setup and local run instructions.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/README.md)
+
+Found the existing README and will extend it with a dedicated frontend UI setup section for local use after cloning.
+
+Replacing 19 lines with 42 lines in [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/README.md)
+
+
+```
+
+```
+I updated the project overview and now I’m verifying the README content before adding the full UI setup section.
+
+Read [](file:///c%3A/Users/Srivalli%20Malladi/Source/repos/FlightStatus/submissions/SrivalliMalladi/UseCase/README.md)
+
+The README has been updated with a new `Frontend UI Setup` section that includes cloning, dependency install, run, and test commands for the Angular app.
+
+### Updated file
+- `c:\Users\Srivalli Malladi\Source\repos\FlightStatus\submissions\SrivalliMalladi\UseCase\README.md`
+
+### Local setup steps
+1. `cd submissions\SrivalliMalladi\UseCase\FlightStatus.UI`
+2. `npm install`
+3. `npm run start`
+4. Open `http://localhost:4200`
+
+### UI test/build commands
+- `npm run test -- --watch=false`
+- `npm run build`
+
+Made changes.
+
+## Notes
+- Accepted the updated README file
+
+--------------------------------------------------------------------------------------------------------
 

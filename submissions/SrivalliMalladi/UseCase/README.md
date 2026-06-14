@@ -11,8 +11,9 @@ to fetch the flight status based on Flight number and Date
 - Solution layout:
   - FlightStatus.Api (Minimal API backend)
   - FlightStatus.Tests (xUnit test project)
+  - FlightStatus.UI (Angular frontend app)
 - Folders inside FlightStatus.Api: Models, Interfaces, Providers, Services, Endpoints, Middleware, Data
-- Frontend: Angular UI is optional (not included as a dedicated test project in this solution)
+- Frontend: Angular UI is included under `FlightStatus.UI` and provides the standalone app, Material-based search form, result card, service, and tests.
 
 ## 3. Design
 
@@ -56,6 +57,29 @@ to fetch the flight status based on Flight number and Date
   - GET /flights/status?flightNumber=AB123&date=2026-06-13
 - Example response:
   - { "flightNumber": "AB123", "date": "2026-06-13", "status": "OnTime", "sourceProvider": "AeroTrack" }
+
+## 7. Frontend UI Setup
+
+The Angular UI is located in `FlightStatus.UI` and can be started locally after cloning the repository.
+
+1. Open a terminal and navigate to the UI folder:
+   - `cd submissions\SrivalliMalladi\UseCase\FlightStatus.UI`
+2. Install dependencies:
+   - `npm install`
+3. Start the Angular dev server:
+   - `npm run start`
+4. Open the browser:
+   - `http://localhost:4200`
+
+If you want to verify tests for the UI project:
+
+- `npm run test -- --watch=false`
+
+If you want to produce a production build:
+
+- `npm run build`
+
+> Note: The UI expects the backend API to be available at `https://localhost:44380` by default. If you are running the backend locally, start the API first with `dotnet run` from `FlightStatus.Api`.
 
 ---
 This README provides a concise SDLC view for the FlightStatus application. See the src/ folder for code and tests and the Data/ folder for JSON stubs.

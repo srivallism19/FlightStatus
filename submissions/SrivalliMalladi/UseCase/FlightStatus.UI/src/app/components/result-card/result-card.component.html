@@ -1,0 +1,29 @@
+<mat-card class="result-card" *ngIf="status && !error; else errorBlock">
+  <div class="header-row">
+    <div>
+      <h2>{{ status.flightNumber }}</h2>
+      <p>{{ status.date | date:'yyyy-MM-dd' }}</p>
+    </div>
+    <span class="status-badge" [ngClass]="statusClass">{{ status.status }}</span>
+  </div>
+
+  <div class="section">
+    <p><strong>Scheduled</strong>: {{ status.scheduledDepartureUtc ? (status.scheduledDepartureUtc | date:'short': 'UTC') : 'N/A' }} → {{ status.scheduledArrivalUtc ? (status.scheduledArrivalUtc | date:'short': 'UTC') : 'N/A' }}</p>
+    <p *ngIf="status.actualDepartureUtc"><strong>Actual departure</strong>: {{ status.actualDepartureUtc | date:'short': 'UTC' }}</p>
+    <p *ngIf="status.actualArrivalUtc"><strong>Actual arrival</strong>: {{ status.actualArrivalUtc | date:'short': 'UTC' }}</p>
+  </div>
+
+  <div class="section aero-details" *ngIf="status.gate || status.terminal || status.delayReason">
+    <h3>AeroTrack details</h3>
+    <p *ngIf="status.gate"><strong>Gate</strong>: {{ status.gate }}</p>
+    <p *ngIf="status.terminal"><strong>Terminal</strong>: {{ status.terminal }}</p>
+    <p *ngIf="status.delayReason"><strong>Delay reason</strong>: {{ status.delayReason }}</p>
+  </div>
+</mat-card>
+
+<ng-template #errorBlock>
+  <mat-card class="result-card error-card" *ngIf="error">
+    <h2>Search result</h2>
+    <p>{{ error }}</p>
+  </mat-card>
+</ng-template>
